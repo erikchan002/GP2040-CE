@@ -391,6 +391,14 @@ app.get('/api/getAddonsOptions', (req, res) => {
 		reverseActionRight: 1,
 		i2cAnalog1219Block: 0,
 		i2cAnalog1219Address: 0x40,
+		i2cANSG08SDAPin: -1,
+		i2cANSG08SCLPin: -1,
+		i2cANSG08Block: 0,
+		i2cANSG08Speed: 400000,
+		i2cANSG08Address0: 0x20,
+		i2cANSG08Address1: 0x21,
+		i2cANSG08Address2: 0x22,
+		i2cANSG08Address3: 0x23,
 		onBoardLedMode: 0,
 		dualDirDpadMode: 0,
 		dualDirCombineMode: 0,
@@ -498,6 +506,8 @@ app.get('/api/getAddonsOptions', (req, res) => {
         encoderTwoAllowWrapAround: false,
         encoderTwoMultiplier: 1,
         RotaryAddonEnabled: 1,
+		PSPassthroughAddonEnabled: 1,
+		I2CANSG08InputEnabled: 1,
 		usedPins: Object.values(picoController),
 	});
 });

@@ -1299,6 +1299,17 @@ std::string setAddonOptions()
     docToValue(analogADS1219Options.i2cAddress, doc, "i2cAnalog1219Address");
     docToValue(analogADS1219Options.enabled, doc, "I2CAnalog1219InputEnabled");
 
+	ANSG08Options& ansg08Options = Storage::getInstance().getAddonOptions().ansg08Options;
+	docToPin(ansg08Options.i2cSDAPin, doc, "i2cANSG08SDAPin");
+	docToPin(ansg08Options.i2cSCLPin, doc, "i2cANSG08SCLPin");
+	docToValue(ansg08Options.i2cBlock, doc, "i2cANSG08Block");
+	docToValue(ansg08Options.i2cSpeed, doc, "i2cANSG08Speed");
+	docToValue(ansg08Options.i2cAddress0, doc, "i2cANSG08Address0");
+	docToValue(ansg08Options.i2cAddress1, doc, "i2cANSG08Address1");
+	docToValue(ansg08Options.i2cAddress2, doc, "i2cANSG08Address2");
+	docToValue(ansg08Options.i2cAddress3, doc, "i2cANSG08Address3");
+	docToValue(ansg08Options.enabled, doc, "I2CANSG08InputEnabled");
+
     SliderOptions& sliderOptions = Storage::getInstance().getAddonOptions().sliderOptions;
     docToValue(sliderOptions.modeDefault, doc, "sliderModeZero");
     docToValue(sliderOptions.enabled, doc, "JSliderInputEnabled");
@@ -1702,6 +1713,17 @@ std::string getAddonOptions()
     writeDoc(doc, "i2cAnalog1219Block", analogADS1219Options.i2cBlock);
     writeDoc(doc, "i2cAnalog1219Address", analogADS1219Options.i2cAddress);
     writeDoc(doc, "I2CAnalog1219InputEnabled", analogADS1219Options.enabled);
+
+    const ANSG08Options& ansg08Options = Storage::getInstance().getAddonOptions().ansg08Options;
+    writeDoc(doc, "i2cANSG08SDAPin", cleanPin(ansg08Options.i2cSDAPin));
+    writeDoc(doc, "i2cANSG08SCLPin", cleanPin(ansg08Options.i2cSCLPin));
+    writeDoc(doc, "i2cANSG08Block", ansg08Options.i2cBlock);
+    writeDoc(doc, "i2cANSG08Speed", ansg08Options.i2cSpeed);
+    writeDoc(doc, "i2cANSG08Address0", ansg08Options.i2cAddress0);
+    writeDoc(doc, "i2cANSG08Address1", ansg08Options.i2cAddress1);
+    writeDoc(doc, "i2cANSG08Address2", ansg08Options.i2cAddress2);
+    writeDoc(doc, "i2cANSG08Address3", ansg08Options.i2cAddress3);
+    writeDoc(doc, "I2CANSG08InputEnabled", ansg08Options.enabled);
 
     const SliderOptions& sliderOptions = Storage::getInstance().getAddonOptions().sliderOptions;
     writeDoc(doc, "sliderModeZero", sliderOptions.modeDefault);

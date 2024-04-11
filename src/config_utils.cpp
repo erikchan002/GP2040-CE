@@ -32,6 +32,7 @@
 #include "addons/snes_input.h"
 #include "addons/input_macro.h"
 #include "addons/rotaryencoder.h"
+#include "addons/i2c_ansg08.h"
 
 #include "CRC32.h"
 #include "FlashPROM.h"
@@ -591,6 +592,7 @@ void ConfigUtils::initUnsetPropertiesWithDefaults(Config& config)
     INIT_UNSET_PROPERTY(config.addonOptions.analogADS1256Options, avdd, ADS1256_MAX_3V);
     INIT_UNSET_PROPERTY(config.addonOptions.analogADS1256Options, enableTriggers, false);
 
+    // addonOptions.dualDirectionalOptions
     INIT_UNSET_PROPERTY(config.addonOptions.dualDirectionalOptions, enabled, !!DUAL_DIRECTIONAL_ENABLED);
     INIT_UNSET_PROPERTY(config.addonOptions.dualDirectionalOptions, deprecatedUpPin, (Pin_t)-1);
     INIT_UNSET_PROPERTY(config.addonOptions.dualDirectionalOptions, deprecatedDownPin, (Pin_t)-1)
@@ -682,6 +684,17 @@ void ConfigUtils::initUnsetPropertiesWithDefaults(Config& config)
     INIT_UNSET_PROPERTY(config.addonOptions.rotaryOptions.encoderTwo, resetAfter, ENCODER_TWO_RESET);
     INIT_UNSET_PROPERTY(config.addonOptions.rotaryOptions.encoderTwo, allowWrapAround, ENCODER_TWO_WRAP);
     INIT_UNSET_PROPERTY(config.addonOptions.rotaryOptions.encoderTwo, multiplier, ENCODER_TWO_MULTIPLIER);
+
+    // addonOptions.ansg08Options
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, enabled, !!I2C_ANSG08_ENABLED);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cBlock, (I2C_ANSG08_BLOCK == i2c0) ? 0 : 1)
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSDAPin, I2C_ANSG08_SDA_PIN);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSCLPin, I2C_ANSG08_SCL_PIN);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress0, I2C_ANSG08_ADDRESS_0);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress1, I2C_ANSG08_ADDRESS_1);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress2, I2C_ANSG08_ADDRESS_2);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress3, I2C_ANSG08_ADDRESS_3);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSpeed, I2C_ANSG08_SPEED);
 
     // keyboardMapping
     INIT_UNSET_PROPERTY(config.addonOptions.keyboardHostOptions, enabled, KEYBOARD_HOST_ENABLED);

@@ -42,6 +42,8 @@ import Keyboard, { keyboardScheme, keyboardState } from '../Addons/Keyboard';
 import InputHistory, { inputHistoryScheme, inputHistoryState } from '../Addons/InputHistory';
 import Rotary, { rotaryScheme, rotaryState } from '../Addons/Rotary';
 
+import ANSG08, { ansg08Scheme, ansg08State } from '../Addons/ANSG08';
+
 const schema = yup.object().shape({
 	...analogScheme,
 	...analog1256Scheme,
@@ -61,6 +63,7 @@ const schema = yup.object().shape({
 	...keyboardScheme,
 	...inputHistoryScheme,
 	...rotaryScheme,
+	...ansg08Scheme,
 });
 
 const defaultValues = {
@@ -83,6 +86,7 @@ const defaultValues = {
 	...keyboardState,
 	...inputHistoryState,
 	...rotaryState,
+	...ansg08State,
 };
 
 const ADDONS = [
@@ -104,7 +108,8 @@ const ADDONS = [
 	FocusMode,
 	Keyboard,
 	InputHistory,
-    Rotary
+    Rotary,
+	ANSG08,
 ];
 
 const FormContext = ({ setStoredData }) => {
@@ -114,7 +119,7 @@ const FormContext = ({ setStoredData }) => {
 	useEffect(() => {
 		async function fetchData() {
 			const data = await WebApi.getAddonsOptions(setLoading);
-
+			console.log("get addons options", data);
 			setValues(data);
 			setStoredData(JSON.parse(JSON.stringify(data))); // Do a deep copy to keep the original
 		}
@@ -181,6 +186,7 @@ export default function AddonsConfigPage() {
 			}
 		});
 		sanitizeData(resultObject);
+		console.log("set addons options", resultObject)
 		const success = await WebApi.setAddonsOptions(resultObject);
 		setStoredData(JSON.parse(JSON.stringify(values))); // Update to reflect saved data
 		setSaveMessage(

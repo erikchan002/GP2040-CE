@@ -432,6 +432,20 @@ message AnalogADS1256Options
     optional bool enableTriggers = 6;
 }
 
+message ANSG08Options
+{
+	optional bool enabled = 1;
+	
+	optional int32 i2cBlock = 2;
+	optional int32 i2cSDAPin = 3;
+	optional int32 i2cSCLPin = 4;
+	optional int32 i2cAddress0 = 5;
+	optional int32 i2cAddress1 = 6;
+	optional int32 i2cAddress2 = 7;
+	optional int32 i2cAddress3 = 8;
+	optional int32 i2cSpeed = 9;
+}
+
 message DualDirectionalOptions
 {
     optional bool enabled = 1;
@@ -753,6 +767,7 @@ message AddonOptions
     optional XBOnePassthroughOptions xbonePassthroughOptions = 22 [deprecated = true];
     optional AnalogADS1256Options analogADS1256Options = 23;
     optional RotaryOptions rotaryOptions = 24;
+    optional ANSG08Options ansg08Options = 25;
 }
 
 message MigrationHistory

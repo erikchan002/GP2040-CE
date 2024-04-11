@@ -30,6 +30,7 @@
 #include "addons/input_macro.h"
 #include "addons/snes_input.h"
 #include "addons/rotaryencoder.h"
+#include "addons/i2c_ansg08.h"
 
 // Pico includes
 #include "pico/bootrom.h"
@@ -108,6 +109,7 @@ void GP2040::setup() {
 	addons.LoadAddon(new ReverseInput(), CORE0_INPUT);
 	addons.LoadAddon(new TurboInput(), CORE0_INPUT); // Turbo overrides button states and should be close to the end
 	addons.LoadAddon(new InputMacro(), CORE0_INPUT);
+	addons.LoadAddon(new I2CANSG08Input(), CORE0_INPUT);
 
 	InputMode inputMode = gamepad->getOptions().inputMode;
 	const BootAction bootAction = getBootAction();
