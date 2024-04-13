@@ -688,13 +688,14 @@ void ConfigUtils::initUnsetPropertiesWithDefaults(Config& config)
     // addonOptions.ansg08Options
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, enabled, !!I2C_ANSG08_ENABLED);
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cBlock, (I2C_ANSG08_BLOCK == i2c0) ? 0 : 1)
-    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSDAPin, I2C_ANSG08_SDA_PIN);
-    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSCLPin, I2C_ANSG08_SCL_PIN);
+    // INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSDAPin, I2C_ANSG08_SDA_PIN);
+    // INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSCLPin, I2C_ANSG08_SCL_PIN);
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress0, I2C_ANSG08_ADDRESS_0);
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress1, I2C_ANSG08_ADDRESS_1);
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress2, I2C_ANSG08_ADDRESS_2);
     INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cAddress3, I2C_ANSG08_ADDRESS_3);
-    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSpeed, I2C_ANSG08_SPEED);
+    // INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, i2cSpeed, I2C_ANSG08_SPEED);
+    INIT_UNSET_PROPERTY(config.addonOptions.ansg08Options, reverse, !!I2C_ANSG08_REVERSE);
 
     // keyboardMapping
     INIT_UNSET_PROPERTY(config.addonOptions.keyboardHostOptions, enabled, KEYBOARD_HOST_ENABLED);

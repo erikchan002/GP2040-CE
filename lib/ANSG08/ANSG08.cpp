@@ -3,20 +3,19 @@
 #include <algorithm>
 #include <cstring>
 
-ANSG08::ANSG08(uint8_t sda, uint8_t scl, i2c_inst_t *i2c,
-               int32_t speed, uint8_t address)
-    : address(address), i2c(i2c), sda(sda), scl(scl), speed(speed) { }
+ANSG08::ANSG08(PeripheralI2C *i2c, uint8_t address)
+    : address(address), i2c(i2c) { }
 
 void ANSG08::begin()
 {
-	if ((sda + 2 * i2c_hw_index(i2c))%4 != 0) return ;
-	if ((scl + 3 + 2 * i2c_hw_index(i2c))%4 != 0) return ;
+	// if ((sda + 2 * i2c_hw_index(i2c))%4 != 0) return ;
+	// if ((scl + 3 + 2 * i2c_hw_index(i2c))%4 != 0) return ;
 
-  i2c_init(i2c, speed);
-  gpio_set_function(sda, GPIO_FUNC_I2C);
-  gpio_set_function(scl, GPIO_FUNC_I2C);
-  gpio_pull_up(sda);
-  gpio_pull_up(scl);
+  // i2c_init(i2c, speed);
+  // gpio_set_function(sda, GPIO_FUNC_I2C);
+  // gpio_set_function(scl, GPIO_FUNC_I2C);
+  // gpio_pull_up(sda);
+  // gpio_pull_up(scl);
 
   // sleep_ms(200);
   softReset();
@@ -129,8 +128,9 @@ uint8_t ANSG08::readOutput()
 
 int ANSG08::readRegistersIntoBuffer(uint8_t startRegisterAddress, size_t length)
 {
-  i2c_write_blocking(i2c, address, &startRegisterAddress, 1, true);
-  return i2c_read_blocking(i2c, address, buffer, std::min(length,BUFFER_SIZE), false);
+  return i2c->readRegister(address, startRegisterAddress, buffer, std::min(length,BUFFER_SIZE));
+  // i2c_write_blocking(i2c, address, &startRegisterAddress, 1, true);
+  // return i2c_read_blocking(i2c, address, buffer, std::min(length,BUFFER_SIZE), false);
 }
 
 uint8_t ANSG08::readRegister(uint8_t registerAddress)
@@ -145,7 +145,8 @@ int ANSG08::writeRegistersFromBuffer(uint8_t startRegisterAddress, size_t length
 {
   memmove(buffer+1,buffer,std::min(length,static_cast<size_t>(BUFFER_SIZE-1)));
   buffer[0] = startRegisterAddress;
-  return i2c_write_blocking(i2c, address, buffer, std::min(static_cast<size_t>(length+1),BUFFER_SIZE), false);
+  return i2c->write(address, buffer, std::min(static_cast<size_t>(length+1),BUFFER_SIZE), false);
+  // return i2c_write_blocking(i2c, address, buffer, std::min(static_cast<size_t>(length+1),BUFFER_SIZE), false);
 }
 
 void ANSG08::writeRegister(uint8_t registerAddress, uint8_t data)

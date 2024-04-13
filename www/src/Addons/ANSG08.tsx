@@ -1,6 +1,8 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { FormCheck, Row } from 'react-bootstrap';
+import { AppContext } from '../Contexts/AppContext';
+import React, { useContext } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { FormCheck, Row, FormLabel } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 import * as yup from 'yup';
 
 import Section from '../Components/Section';
@@ -11,22 +13,22 @@ import { I2C_BLOCKS } from '../Data/Peripherals';
 
 export const ansg08Scheme = {
     I2CANSG08InputEnabled: yup.number().label('I2C ANSG08 Input Enabled'),
-    i2cANSG08SDAPin: yup
-        .number()
-        .label('I2C ANSG08 SDA Pin')
-        .validatePinWhenValue('I2CANSG08InputEnabled'),
-    i2cANSG08SCLPin: yup
-        .number()
-        .label('I2C ANSG08 SCL Pin')
-        .validatePinWhenValue('I2CANSG08InputEnabled'),
+    // i2cANSG08SDAPin: yup
+    //     .number()
+    //     .label('I2C ANSG08 SDA Pin')
+    //     .validatePinWhenValue('I2CANSG08InputEnabled'),
+    // i2cANSG08SCLPin: yup
+    //     .number()
+    //     .label('I2C ANSG08 SCL Pin')
+    //     .validatePinWhenValue('I2CANSG08InputEnabled'),
     i2cANSG08Block: yup
         .number()
         .label('I2C ANSG08 Block')
         .validateSelectionWhenValue('I2CANSG08InputEnabled', I2C_BLOCKS),
-    i2cANSG08Speed: yup
-        .number()
-        .label('I2C ANSG08 Speed')
-        .validateNumberWhenValue('I2CANSG08InputEnabled'),
+    // i2cANSG08Speed: yup
+    //     .number()
+    //     .label('I2C ANSG08 Speed')
+    //     .validateNumberWhenValue('I2CANSG08InputEnabled'),
     i2cANSG08Address0: yup
         .number()
         .label('I2C first ANSG08 Address')
@@ -47,10 +49,10 @@ export const ansg08Scheme = {
 
 export const ansg08State = {
     I2CANSG08InputEnabled: 0,
-    i2cANSG08SDAPin: -1,
-    i2cANSG08SCLPin: -1,
+    // i2cANSG08SDAPin: -1,
+    // i2cANSG08SCLPin: -1,
     i2cANSG08Block: 0,
-    i2cANSG08Speed: 400000,
+    // i2cANSG08Speed: 400000,
     i2cANSG08Address0: 0x20,
     i2cANSG08Address1: 0x21,
     i2cANSG08Address2: 0x22,
@@ -59,14 +61,24 @@ export const ansg08State = {
 
 const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
     const { t } = useTranslation();
+    const { getAvailablePeripherals, getSelectedPeripheral } =
+		useContext(AppContext);
+
+	const handlePeripheralChange = (e) => {
+		let device = getSelectedPeripheral('i2c', e.target.value);
+		handleChange(e);
+	};
+
     return (
         <Section title={t('AddonsConfig:i2c-ansg08-header-text')}>
             <div
                 id="i2cANSG08InputOptions"
-                hidden={!values.I2CANSG08InputEnabled}
+                hidden={
+                    !(values.I2CANSG08InputEnabled &&  getAvailablePeripherals('i2c'))
+                }
             >
                 <Row className="mb-3">
-                    <FormControl
+                    {/* <FormControl
                         type="number"
                         label={t('AddonsConfig:i2c-ansg08-sda-pin-label')}
                         name="i2cANSG08SDAPin"
@@ -91,24 +103,28 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                         onChange={handleChange}
                         min={-1}
                         max={29}
-                    />
-                    <FormSelect
-                        label={t('AddonsConfig:i2c-ansg08-block-label')}
-                        name="i2cANSG08Block"
-                        className="form-select-sm"
-                        groupClassName="col-sm-3 mb-3"
-                        value={values.i2cANSG08Block}
-                        error={errors.i2cANSG08Block}
-                        isInvalid={errors.i2cANSG08Block}
-                        onChange={handleChange}
-                    >
-                        {I2C_BLOCKS.map((o, i) => (
-                            <option key={`i2cBlock-option-${i}`} value={o.value}>
-                                {o.label}
-                            </option>
-                        ))}
-                    </FormSelect>
-                    <FormControl
+                    /> */}
+                    {getAvailablePeripherals('i2c') ? (
+						<FormSelect
+                            label={t('AddonsConfig:i2c-ansg08-block-label')}
+                            name="i2cANSG08Block"
+                            className="form-select-sm"
+                            groupClassName="col-sm-3 mb-3"
+                            value={values.i2cANSG08Block}
+                            error={errors.i2cANSG08Block}
+                            isInvalid={errors.i2cANSG08Block}
+                            onChange={handlePeripheralChange}
+                        >
+                            {getAvailablePeripherals('i2c').map((o, i) => (
+                                <option key={`i2cBlock-option-${i}`} value={o.value}>
+                                    {o.label}
+                                </option>
+                            ))}
+                        </FormSelect>
+					) : (
+						''
+					)}
+                    {/* <FormControl
                         label={t('AddonsConfig:i2c-ansg08-speed-label')}
                         name="i2cANSG08Speed"
                         className="form-control-sm"
@@ -118,7 +134,21 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                         isInvalid={errors.i2cANSG08Speed}
                         onChange={handleChange}
                         min={100000}
-                    />
+                    /> */}
+                    <FormCheck
+						label={t(
+							'AddonsConfig:i2c-ansg08-reverse-label',
+						)}
+						type="switch"
+						id="i2cANSG08Reverse"
+						className="col-sm-3 ms-2"
+						isInvalid={false}
+						checked={Boolean(values.i2cANSG08Reverse)}
+						onChange={(e) => {
+							handleCheckbox('i2cANSG08Reverse', values);
+							handleChange(e);
+						}}
+					/>
                 </Row>
                 <Row className="mb-3">
                     <FormControl
@@ -132,8 +162,6 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                         onChange={handleChange}
                         maxLength={4}
                     />
-                </Row>
-                <Row className="mb-3">
                     <FormControl
                         label={t('AddonsConfig:i2c-ansg08-address-1-label')}
                         name="i2cANSG08Address1"
@@ -145,8 +173,6 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                         onChange={handleChange}
                         maxLength={4}
                     />
-                </Row>
-                <Row className="mb-3">
                     <FormControl
                         label={t('AddonsConfig:i2c-ansg08-address-2-label')}
                         name="i2cANSG08Address2"
@@ -158,8 +184,6 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                         onChange={handleChange}
                         maxLength={4}
                     />
-                </Row>
-                <Row className="mb-3">
                     <FormControl
                         label={t('AddonsConfig:i2c-ansg08-address-3-label')}
                         name="i2cANSG08Address3"
@@ -173,18 +197,34 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
                     />
                 </Row>
             </div>
-            <FormCheck
-                label={t('Common:switch-enabled')}
-                type="switch"
-                id="i2cANSG08InputButton"
-                reverse
-                isInvalid={false}
-                checked={Boolean(values.I2CANSG08InputEnabled)}
-                onChange={(e) => {
-                    handleCheckbox('I2CANSG08InputEnabled', values);
-                    handleChange(e);
-                }}
-            />
+            {getAvailablePeripherals('i2c') ? (
+				<FormCheck
+					label={t('Common:switch-enabled')}
+					type="switch"
+					id="i2cANSG08InputButton"
+					isInvalid={false}
+					checked={
+						Boolean(values.I2CANSG08InputEnabled) &&
+						getAvailablePeripherals('i2c')
+					}
+					onChange={(e) => {
+						handleCheckbox('I2CANSG08InputEnabled', values);
+						handleChange(e);
+					}}
+				/>
+			) : (
+				<FormLabel>
+					<Trans
+						ns="PeripheralMapping"
+						i18nKey="peripheral-toggle-unavailable"
+						values={{ name: 'I2C' }}
+					>
+						<NavLink to="/peripheral-mapping">
+							{t('PeripheralMapping:header-text')}
+						</NavLink>
+					</Trans>
+				</FormLabel>
+			)}
         </Section>
     );
 };

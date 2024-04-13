@@ -1,10 +1,11 @@
 #ifndef _ANSG08_H_
 #define _ANSG08_H_
 
-#include "pico/stdlib.h"
-#include "hardware/gpio.h"
-#include "pico/binary_info.h"
-#include "hardware/i2c.h"
+#include "peripheral_i2c.h"
+// #include "pico/stdlib.h"
+// #include "hardware/gpio.h"
+// #include "pico/binary_info.h"
+// #include "hardware/i2c.h"
 
 #define ANSG08_DEFAULT_I2C_ADDRESS 0x24
 
@@ -62,8 +63,9 @@ class ANSG08 {
 
   static constexpr size_t BUFFER_SIZE = 128;
 
-  ANSG08(uint8_t sda, uint8_t scl, i2c_inst_t* i2c,
-         int32_t speed, uint8_t address = ANSG08_DEFAULT_I2C_ADDRESS);
+  ANSG08(PeripheralI2C* i2c, uint8_t address = ANSG08_DEFAULT_I2C_ADDRESS);
+  // ANSG08(uint8_t sda, uint8_t scl, i2c_inst_t* i2c,
+  //        int32_t speed, uint8_t address = ANSG08_DEFAULT_I2C_ADDRESS);
 
   void begin();
   void softReset();
@@ -95,9 +97,10 @@ class ANSG08 {
   uint8_t readOutput();
 
  private:
-  i2c_inst_t* i2c;
-  uint8_t sda, scl;
-  int32_t speed;
+  PeripheralI2C* i2c;
+  // i2c_inst_t* i2c;
+  // uint8_t sda, scl;
+  // int32_t speed;
   uint8_t buffer[BUFFER_SIZE];
 
   int readRegistersIntoBuffer(uint8_t startRegisterAddress,

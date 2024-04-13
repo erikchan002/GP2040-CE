@@ -5,26 +5,27 @@
 
 #include "GamepadEnums.h"
 #include "gpaddon.h"
+#include "peripheralmanager.h"
 
 #ifndef I2C_ANSG08_ENABLED
 #define I2C_ANSG08_ENABLED 0
 #endif
 
-#ifndef I2C_ANSG08_SDA_PIN
-#define I2C_ANSG08_SDA_PIN -1
-#endif
+// #ifndef I2C_ANSG08_SDA_PIN
+// #define I2C_ANSG08_SDA_PIN -1
+// #endif
 
-#ifndef I2C_ANSG08_SCL_PIN
-#define I2C_ANSG08_SCL_PIN -1
-#endif
+// #ifndef I2C_ANSG08_SCL_PIN
+// #define I2C_ANSG08_SCL_PIN -1
+// #endif
 
 #ifndef I2C_ANSG08_BLOCK
 #define I2C_ANSG08_BLOCK i2c0
 #endif
 
-#ifndef I2C_ANSG08_SPEED
-#define I2C_ANSG08_SPEED 400000
-#endif
+// #ifndef I2C_ANSG08_SPEED
+// #define I2C_ANSG08_SPEED 400000
+// #endif
 
 #ifndef I2C_ANSG08_ADDRESS_0
 #define I2C_ANSG08_ADDRESS_0 ANSG08_DEFAULT_I2C_ADDRESS
@@ -40,6 +41,10 @@
 
 #ifndef I2C_ANSG08_ADDRESS_3
 #define I2C_ANSG08_ADDRESS_3 ANSG08_DEFAULT_I2C_ADDRESS + 3
+#endif
+
+#ifndef I2C_ANSG08_REVERSE
+#define I2C_ANSG08_REVERSE true
 #endif
 
 #define I2CANSG08Name "I2CANSG08"

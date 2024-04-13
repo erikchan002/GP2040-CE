@@ -437,13 +437,11 @@ message ANSG08Options
 	optional bool enabled = 1;
 	
 	optional int32 i2cBlock = 2;
-	optional int32 i2cSDAPin = 3;
-	optional int32 i2cSCLPin = 4;
-	optional int32 i2cAddress0 = 5;
-	optional int32 i2cAddress1 = 6;
-	optional int32 i2cAddress2 = 7;
-	optional int32 i2cAddress3 = 8;
-	optional int32 i2cSpeed = 9;
+	optional int32 i2cAddress0 = 3;
+	optional int32 i2cAddress1 = 4;
+	optional int32 i2cAddress2 = 5;
+	optional int32 i2cAddress3 = 6;
+    optional bool reverse = 7;
 }
 
 message DualDirectionalOptions
