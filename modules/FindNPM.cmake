@@ -5,7 +5,7 @@
 # NPM_EXECUTABLE Path to the npm executable
 # NPM_VERSION    npm version
 
-find_program(NPM_EXECUTABLE NAMES npm)
+find_program(NPM_EXECUTABLE NAMES npm .nvm/versions/node)
 
 if (${NPM_EXECUTABLE} MATCHES "NOTFOUND")
   message(STATUS "Could not find npm")

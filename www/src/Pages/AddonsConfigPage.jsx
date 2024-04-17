@@ -42,7 +42,7 @@ import Keyboard, { keyboardScheme, keyboardState } from '../Addons/Keyboard';
 import InputHistory, { inputHistoryScheme, inputHistoryState } from '../Addons/InputHistory';
 import Rotary, { rotaryScheme, rotaryState } from '../Addons/Rotary';
 
-import ANSG08, { ansg08Scheme, ansg08State } from '../Addons/ANSG08';
+import I2CANSG08, { i2cAnsg08Scheme, i2cAnsg08State } from '../Addons/I2CANSG08';
 
 const schema = yup.object().shape({
 	...analogScheme,
@@ -63,7 +63,7 @@ const schema = yup.object().shape({
 	...keyboardScheme,
 	...inputHistoryScheme,
 	...rotaryScheme,
-	...ansg08Scheme,
+	...i2cAnsg08Scheme,
 });
 
 const defaultValues = {
@@ -86,7 +86,7 @@ const defaultValues = {
 	...keyboardState,
 	...inputHistoryState,
 	...rotaryState,
-	...ansg08State,
+	...i2cAnsg08State,
 };
 
 const ADDONS = [
@@ -109,7 +109,7 @@ const ADDONS = [
 	Keyboard,
 	InputHistory,
     Rotary,
-	ANSG08,
+	I2CANSG08,
 ];
 
 const FormContext = ({ setStoredData }) => {

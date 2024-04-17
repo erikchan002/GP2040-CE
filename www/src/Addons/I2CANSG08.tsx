@@ -11,7 +11,7 @@ import FormSelect from '../Components/FormSelect';
 import FormControl from '../Components/FormControl';
 import { I2C_BLOCKS } from '../Data/Peripherals';
 
-export const ansg08Scheme = {
+export const i2cAnsg08Scheme = {
     I2CANSG08InputEnabled: yup.number().label('I2C ANSG08 Input Enabled'),
     // i2cANSG08SDAPin: yup
     //     .number()
@@ -47,7 +47,7 @@ export const ansg08Scheme = {
         .validateNumberWhenValue('I2CANSG08InputEnabled'),
 };
 
-export const ansg08State = {
+export const i2cAnsg08State = {
     I2CANSG08InputEnabled: 0,
     // i2cANSG08SDAPin: -1,
     // i2cANSG08SCLPin: -1,
@@ -59,7 +59,7 @@ export const ansg08State = {
     i2cANSG08Address3: 0x23,
 };
 
-const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
+const I2CANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
     const { t } = useTranslation();
     const { getAvailablePeripherals, getSelectedPeripheral } =
 		useContext(AppContext);
@@ -202,6 +202,7 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
 					label={t('Common:switch-enabled')}
 					type="switch"
 					id="i2cANSG08InputButton"
+                    reverse
 					isInvalid={false}
 					checked={
 						Boolean(values.I2CANSG08InputEnabled) &&
@@ -229,4 +230,4 @@ const ANSG08 = ({ values, errors, handleChange, handleCheckbox }) => {
     );
 };
 
-export default ANSG08;
+export default I2CANSG08;
